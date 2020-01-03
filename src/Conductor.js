@@ -16,7 +16,7 @@ function Conductor(props){
             <button className="btn btn-primary" onClick={() => props.onEdit(props.conductor)}>Recuperar puntos</button>
         </td>
         <td>
-            <button className="btn btn-primary">Ver multas</button>
+            <button className="btn btn-primary">Pon multas</button>
         </td>
     </tr>
     );

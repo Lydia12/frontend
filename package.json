@@ -1,4 +1,3 @@
-
 {
   "name": "conductor-frontend",
   "version": "0.1.0",
@@ -10,6 +9,7 @@
     "bootstrap": "^4.4.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0"
   },
   "scripts": {
@@ -21,6 +21,10 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+    "resolutions": {
+      "react-router": "5.0.0",
+      "react-router-dom": "5.0.0"
+    },
   "browserslist": {
     "production": [
       ">0.2%",
