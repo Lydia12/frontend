@@ -33,10 +33,6 @@ class Login extends Component {
             this.routeChange();
         }
 
-
-        // TODO Créer un message d'erreur si les identifiants sont incorrects
-        //
-        //
     }
 
     routeChange = () => {
