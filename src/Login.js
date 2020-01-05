@@ -1,43 +1,17 @@
-import React, { Component } from "react";
-import { Button, FormGroup, FormControl } from "react-bootstrap";
-import Axios from "axios";
+import React, {Component} from "react";
+import { withRouter} from 'react-router-dom';
+import {Button,FormGroup,FormControl,FormLabel,Form} from "react-bootstrap";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/css/bootstrap-theme.min.css';
 
 class Login extends Component {
-    constructor(props) {
+    constructor(props){
         super(props);
-        this.routeChange = this.routeChange.bind(this);
-        this.state = {
-            email: "",
-            password: "",
+
+        this.state={
+            email:"",
+            password:"",
             jwtToken: ""
         };
-    }
-
-    postCredencials = async () => {
-       let response = await Axios({
-            method: 'post',
-            url: 'http://localhost:8080/authenticate',
-            data: {
-                'email': this.state.email.toString(),
-                'password': this.state.password.toString()
-            }
-
-        });
-
-        var jwt = response.data.token;
-        if (response.status === 200 && jwt) {
-            localStorage.setItem("access_token", jwt);
-            this.routeChange();
-        }
-
-    }
-
-    routeChange = () => {
-        let path = `/hello`;
-        this.props.history.push(path);
     }
 
     handleChange = event => {
@@ -47,47 +21,50 @@ class Login extends Component {
     }
 
     handleSubmit = event => {
-        event.preventDefault();
-        this.postCredencials();
+        /* event.preventDefault();
+        this.props.history.push('/Overview');
+        */
+       event.preventDefault();
+
+        const { email, password } = this.state;
+        const { history } = this.props;
+
+        this.setState({ error: false });
+
+        if (!(email === 'george@cloud.de' && password === 'foreman')) {
+            return this.setState({ error: true });
+        }
+
+        history.push('/Overview');
+        /* 
+        CREATE JWT TOKEN AND SAVE IN STATUS!!!!!!!!
+        */
     }
 
-
-
-    render() {
+    render()
+    {
         return (
-            <div className="Login container-fluid" >
-                <div className="row justify-content-center">
-                    <form  className="col-5 " onSubmit={this.handleSubmit}>
-                        <h3 className="col-12 text-center">Log in</h3>
-                        <FormGroup controlId="email" >
-                            <label>Email</label>
-                            <FormControl
-                                autoFocus
-                                type="text"
-                                value={this.state.email}
-                                onChange={this.handleChange}
-                            />
-                        </FormGroup>
-                        <FormGroup controlId="password" >
-                            <label>Password</label>
-                            <FormControl
-                                value={this.state.password}
-                                onChange={this.handleChange}
-                                type="password"
-                            />
-                        </FormGroup>
-                        <div id ="invalidCredential" style={{ display: 'none'}} className={"text-center"}>Invalid Credentials</div>
-                        <Button
-                            block
-                            type="submit"
-                        >
-                            Login
-                        </Button>
-                    </form>
+            <div className="Login">
+                <h1>Login</h1>
+                <Form onSubmit={this.handleSubmit}>
 
-                </div>
+                    <FormGroup controlId="email">
+                        <FormLabel>Email</FormLabel>
+                        <FormControl autoFocus type="email" value={this.state.email} onChange={this.handleChange}/>
+                    </FormGroup>
+                    <FormGroup controlId="password">
+                        <FormLabel>Password</FormLabel>
+                        <FormControl type="password" value={this.state.password} onChange={this.handleChange}/>
+                    </FormGroup>
+
+                    <Button type="submit">Login</Button>
+                </Form>
+
+
+
             </div>
-        );
+        )
     }
 }
-export default Login;
+
+export default withRouter(Login);

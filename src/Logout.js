@@ -7,31 +7,21 @@ import 'bootstrap/dist/css/bootstrap-theme.min.css';
 
 class Logout extends Component {
 
-   sendLogout = () => {
-       localStorage.removeItem('access_token');
-   }
 
-    handleSubmit = event => {
-        event.preventDefault();
-        this.sendLogout();
-    };
 
-    render() {
-        return (
-            <div className="Login container-fluid" >
-                <div className="row justify-content-center">
-                    <form  className="col-5 " onSubmit={this.handleSubmit}>
-                        <Button
-                            block
-                            type="submit"
-                            className="btn btn-primary" >
-                            Logout
-                        </Button>
-                    </form>
+   handleLogout = event => {
+    const { history } = this.props;
 
-                </div>
-            </div>
-        );
+    history.push('/');
+    /* 
+    DELETE JWT TOKEN AND SAVE IN STATUS!!!!!!!!
+    MAYBE LIKE THIS:
+    
+    sendLogout = () => {
+    localStorage.removeItem('access_token');
     }
+    */
+    }
+
 }
 export default Logout;
