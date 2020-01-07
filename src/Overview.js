@@ -10,7 +10,7 @@ import Col from 'react-bootstrap/Col';
 
 function Overview() {
    
-
+  /*
   const conductores = [{
     dni: "1234K",
     nombre: "Juan",
@@ -47,6 +47,7 @@ function Overview() {
     multas: "2"
   }
 ];
+*/
 
   return (
     <div>
@@ -63,7 +64,8 @@ function Overview() {
           </Row>
           <Row>
             <Col>
-              <Conductores conductores={conductores}/>
+              {/*<Conductores conductores={conductores}/>*/}
+              <Conductores />
             </Col>
           </Row>
       </Container>

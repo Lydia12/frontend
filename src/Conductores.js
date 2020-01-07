@@ -3,13 +3,15 @@ import Conductor from './Conductor.js';
 import NewConductor from './NewConductor.js'
 import EditConductor from './EditConductor.js';
 import Alert from './Alert.js';
+import ConductoresApi from './ConductoresApi.js';
 
 class Conductores extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             errorInfo: null,
-            conductores: this.props.conductores,
+            /*conductores: this.props.conductores, */
+            conductores: [],
             isEditing: {}
         };
         this.handleEdit = this.handleEdit.bind(this);
@@ -18,6 +20,22 @@ class Conductores extends React.Component{
         this.addConductor = this.addConductor.bind(this);
     }
     
+    componentDidMount(){
+        ConductoresApi.getAllConductores()
+            .then(
+                (result) => {
+                    this.setState({
+                        conductores: result
+                    })
+                },
+                (error) => {
+                    this.setState({
+                        errorInfo: "Problem with connection to server"
+                    })
+                }
+            )
+    }
+
     handleEdit(conductor){
         this.setState(prevState => ({
             isEditing: {...prevState.isEditing, [conductor.dni]: conductor}
