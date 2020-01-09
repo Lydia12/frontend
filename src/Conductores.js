@@ -4,6 +4,7 @@ import NewConductor from './NewConductor.js'
 import EditConductor from './EditConductor.js';
 import Alert from './Alert.js';
 import ConductoresApi from './ConductoresApi.js';
+import PuntosApi from './PuntosApi.js';
 
 class Conductores extends React.Component{
     constructor(props){
@@ -12,6 +13,8 @@ class Conductores extends React.Component{
             errorInfo: null,
             /*conductores: this.props.conductores, */
             conductores: [],
+            puntos: [],
+            multas: [],
             isEditing: {}
         };
         this.handleEdit = this.handleEdit.bind(this);
@@ -22,19 +25,32 @@ class Conductores extends React.Component{
     
     componentDidMount(){
         ConductoresApi.getAllConductores()
-            .then(
-                (result) => {
+        .then(
+            (resultCarnet) => {
+                PuntosApi.getAllPuntos()
+                .then(
+                    (resultPuntos) => {
+                        /*geht alle punkte durch und je nach dni fügt es dem konduktor zu*/  
+                        conductores.filter((c) => c.dni !== conductor.dni)
+                        if (!conductores.find(c => c.dni === conductor.dni)){
+
+                        const conductoresAndPuntos = resultCarnet.map((carnet) =>
+                            if(carnet.DNI === resultPuntos.result.dni){
+
+                            }
+                        );
+
                     this.setState({
-                        conductores: result
+                        conductores: resultConductores
                     })
-                },
-                (error) => {
-                    this.setState({
-                        errorInfo: "Problem with connection to server"
-                    })
-                }
-            )
-    }
+            },
+            (error) => {
+                this.setState({
+                    errorInfo: "Problem with connection to server"
+                })
+            }
+                )
+    } }
 
     handleEdit(conductor){
         this.setState(prevState => ({

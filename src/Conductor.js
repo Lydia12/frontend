@@ -4,10 +4,10 @@ import Button from 'react-bootstrap/Button';
 function Conductor(props){
     return(
     <tr>
-        <td>{props.conductor.dni}</td>
-        <td>{props.conductor.nombre}</td>
-        <td>{props.conductor.apellido}</td>
-        <td>{props.conductor.puntos}</td>
+        <td>{props.conductor.DNI}</td>
+        <td>{props.conductor.name}</td>
+        <td>{props.conductor.surname}</td>
+        <td>{props.conductor.puntos_actuales}</td>
         <td>{props.conductor.multas}</td>
         <td>
             <Button variant="danger" onClick={() => props.onDelete(props.conductor)}>Eliminar conductor</Button>
