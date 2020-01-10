@@ -25,12 +25,36 @@ class Conductores extends React.Component{
     
     componentDidMount(){
         ConductoresApi.getAllConductores()
+            .then(
+                (resultCarnet) => {
+                    PuntosApi.getAllPuntos()
+                    .then(
+                        (resultPuntos) => {
+                             
+                        }
+                    )
+                
+                    this.setState({
+                        conductores: resultCarnet 
+                    })
+                },
+                (error) => {
+                    this.setState({
+                        errorInfo: "Problem with connection to server"
+                    })
+                }
+            )
+    }
+
+    /*
+    componentDidMount(){
+        ConductoresApi.getAllConductores()
         .then(
             (resultCarnet) => {
                 PuntosApi.getAllPuntos()
                 .then(
                     (resultPuntos) => {
-                        /*geht alle punkte durch und je nach dni fügt es dem konduktor zu*/  
+                        /*geht alle punkte durch und je nach dni fügt es dem konduktor zu*/  /*
                         conductores.filter((c) => c.dni !== conductor.dni)
                         if (!conductores.find(c => c.dni === conductor.dni)){
 
@@ -51,6 +75,7 @@ class Conductores extends React.Component{
             }
                 )
     } }
+    */
 
     handleEdit(conductor){
         this.setState(prevState => ({
