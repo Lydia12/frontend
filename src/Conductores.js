@@ -6,16 +6,15 @@ import Alert from './Alert.js';
 import ConductoresApi from './ConductoresApi.js';
 import PuntosApi from './PuntosApi.js';
 
+
 class Conductores extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             errorInfo: null,
-            /*conductores: this.props.conductores, */
             conductores: [],
-            puntos: [],
-            multas: [],
-            isEditing: {}
+            isEditing: {},
+            carnetYpuntos: []
         };
         this.handleEdit = this.handleEdit.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
@@ -25,18 +24,17 @@ class Conductores extends React.Component{
     
     componentDidMount(){
         ConductoresApi.getAllConductores()
-            .then(
+            .then(         
                 (resultCarnet) => {
                     PuntosApi.getAllPuntos()
                     .then(
                         (resultPuntos) => {
-                             
-                        }
-                    )
-                
-                    this.setState({
-                        conductores: resultCarnet 
-                    })
+
+                            this.setState({
+                                conductores: resultCarnet.map(x => Object.assign(x, resultPuntos.result.find(y => y.dni === x.DNI)))
+                            })     
+                    }
+                    )      
                 },
                 (error) => {
                     this.setState({
@@ -46,36 +44,6 @@ class Conductores extends React.Component{
             )
     }
 
-    /*
-    componentDidMount(){
-        ConductoresApi.getAllConductores()
-        .then(
-            (resultCarnet) => {
-                PuntosApi.getAllPuntos()
-                .then(
-                    (resultPuntos) => {
-                        /*geht alle punkte durch und je nach dni fügt es dem konduktor zu*/  /*
-                        conductores.filter((c) => c.dni !== conductor.dni)
-                        if (!conductores.find(c => c.dni === conductor.dni)){
-
-                        const conductoresAndPuntos = resultCarnet.map((carnet) =>
-                            if(carnet.DNI === resultPuntos.result.dni){
-
-                            }
-                        );
-
-                    this.setState({
-                        conductores: resultConductores
-                    })
-            },
-            (error) => {
-                this.setState({
-                    errorInfo: "Problem with connection to server"
-                })
-            }
-                )
-    } }
-    */
 
     handleEdit(conductor){
         this.setState(prevState => ({

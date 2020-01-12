@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 
 function Conductor(props){
     return(
@@ -8,15 +7,15 @@ function Conductor(props){
         <td>{props.conductor.name}</td>
         <td>{props.conductor.surname}</td>
         <td>{props.conductor.puntos_actuales}</td>
-        <td>{props.conductor.multas}</td>
-        <td>
-            <Button variant="danger" onClick={() => props.onDelete(props.conductor)}>Eliminar conductor</Button>
-        </td>
+        <td>{props.conductor.importe}</td>
         <td>
             <button className="btn btn-primary" onClick={() => props.onEdit(props.conductor)}>Recuperar puntos</button>
         </td>
         <td>
-            <button className="btn btn-primary">Pon multas</button>
+            <button className="btn btn-primary">Historial de puntos</button>
+        </td>
+        <td>
+            <button className="btn btn-primary">Visualizar multas</button>
         </td>
     </tr>
     );

@@ -18,6 +18,28 @@ class PuntosApi{
     }
 
     
-}
 
+
+    static  recuperarPuntos(dni, puntos){
+            const request = new Request(PuntosApi.API_BASE_URL + "/puntos/" + dni + " /recupera?npuntos=" + puntos , {  
+            method: 'POST',
+            headers: {'x-api-key': 'eiWee8ep9due4deeshoa8Peichai8Eih'}  
+        });
+
+        return fetch(request).then(response => {
+            return response.json();
+        });
+    }
+
+    static  getHistorialPuntos(dni){
+        const request = new Request(PuntosApi.API_BASE_URL + "/historial/" + dni,   {  
+        method: 'GET',
+        headers: {'x-api-key': 'eiWee8ep9due4deeshoa8Peichai8Eih'}  
+    });
+
+    return fetch(request).then(response => {
+        return response.json();
+    });
+}
+}
 export default PuntosApi;
