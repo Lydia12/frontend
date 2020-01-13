@@ -29,7 +29,6 @@ class Conductores extends React.Component{
                     PuntosApi.getAllPuntos()
                     .then(
                         (resultPuntos) => {
-
                             this.setState({
                                 conductores: resultCarnet.map(x => Object.assign(x, resultPuntos.result.find(y => y.dni === x.DNI)))
                             })     

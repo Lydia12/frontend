@@ -4,10 +4,9 @@ class MultasApi{
         return{}
     }
 
-    static getAllMultas(){
+    static getAllMultas(dni){
          /*const headers = this.requestHeaders();  */
-        
-           const request = new Request(MultasApi.API_BASE_URL + "/multas?apikey=3adc97fe-74b6-4702-938b-afffd4011f65", {  
+           const request = new Request(MultasApi.API_BASE_URL + "/multas/numMultas/" + dni + "?apikey=fbce18d8-2f6a-4e40-9a94-d8551eab2362", {  
             method: 'GET',
         });
 

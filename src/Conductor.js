@@ -14,9 +14,6 @@ function Conductor(props){
         <td>
             <button className="btn btn-primary">Historial de puntos</button>
         </td>
-        <td>
-            <button className="btn btn-primary">Visualizar multas</button>
-        </td>
     </tr>
     );
 }
