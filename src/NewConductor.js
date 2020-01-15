@@ -26,13 +26,14 @@ class NewConductor extends React.Component {
     render(){
         return(
             <tr>
+                
+                <td><input className="form-control" name="dni" value={this.state.dni} onChange={this.changeConductor}/></td>
+                <td><input className="form-control" name="nombre" value={this.state.nombre} onChange={this.changeConductor}/></td>
+                <td><input className="form-control" name="apellido" value={this.state.apellido} onChange={this.changeConductor}/></td>
+                
                 <td> </td>
                 <td> </td>
-                <td> </td>
-                <td></td>
-                <td></td>
                 <td><Button variant="success" onClick={this.clickAdd}>Añadir conductor</Button></td>
-               
                 <td><Button href="http://fis-puntos-ui.herokuapp.com/" >Gestionar puntos</Button></td>
                 <td><Button href="https://multas-ui.herokuapp.com/" >Ver multas</Button></td>
                 <td><Button  >Ver carnet</Button></td>

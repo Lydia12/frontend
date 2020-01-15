@@ -7,7 +7,8 @@ class ConductoresApi{
 
     static getAllConductores(){
          const headers = this.requestHeaders(); 
-        const request = new Request(ConductoresApi.API_BASE_URL + "/traffic_management", { 
+        const request = new Request(ConductoresApi.API_BASE_URL + "/traffic_management?apikey=844e6444-75cf-4a97-8eec-d7852d4f6e31", { 
+            
            /* const request = new Request(ConductoresApi.API_BASE_URL + "/puntos", { */
             method: 'GET',
             headers: headers

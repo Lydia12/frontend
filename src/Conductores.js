@@ -23,7 +23,7 @@ class Conductores extends React.Component{
         this.addConductor = this.addConductor.bind(this);
     }
 
-    /*componentDidMount(){
+      /* componentDidMount(){
         ConductoresApi.getAllConductores()
             .then(         
                 (resultCarnet) => {
@@ -37,10 +37,26 @@ class Conductores extends React.Component{
                     })
                 }
             )
-    }*/
+    }  */
 
-    /*
-    componentDidMount(){
+       /*  componentDidMount(){
+        MultasApi.getAllMultas("20154021M")
+            .then(         
+                (resultMultas) => {
+                     
+                    alert(resultMultas.length);
+                        
+                },
+                (error) => {
+                    this.setState({
+                        errorInfo: "Problem with connection to server"
+                    })
+                }
+            )
+    }  */
+
+     
+    /*componentDidMount(){
         ConductoresApi.getAllConductores()
             .then(         
                 (resultCarnet) => {
@@ -72,10 +88,10 @@ class Conductores extends React.Component{
                     })
                 }
             )
-    } */
+    }  */
 
-    /*  
-    componentDidMount(){
+       
+      /* componentDidMount(){
         ConductoresApi.getAllConductores()
             .then(         
                 (resultCarnet) => {
@@ -94,9 +110,11 @@ class Conductores extends React.Component{
                     })
                 }
             )
-    } */
+    }    */
     
-    componentDidMount(){
+      /***********FUNKTIONIERT**********************************/ 
+      
+      componentDidMount(){
         ConductoresApi.getAllConductores()
             .then(         
                 (resultCarnet) => {
@@ -106,13 +124,13 @@ class Conductores extends React.Component{
                             this.setState({
                                 conductores: resultCarnet.map(x => Object.assign(x, resultPuntos.result.find(y => y.dni === x.DNI))) 
                             })  
-                            let updateConductores = this.state.conductores; /*eg*/
+                            let updateConductores = this.state.conductores;  
                             updateConductores.forEach(function (conductor) {   
                                 MultasApi.getAllMultas(conductor.dni)
                                 .then(         
                                     (multasResult) => {
                                           conductor.multas = multasResult.length;
-                                            /*alert(conductor.dni +": "+conductor.multas)  */
+                                            alert(conductor.dni +": "+conductor.multas)  
                                     }
                                 )
                               }); 
@@ -128,7 +146,81 @@ class Conductores extends React.Component{
                     })
                 }
             )
-    }  
+    }     
+
+  /*  componentDidMount(){
+        ConductoresApi.getAllConductores()
+            .then(         
+                (resultCarnet) => {
+                    PuntosApi.getAllPuntos()
+                    .then(
+                        (resultPuntos) => {
+                            this.setState({
+                                conductores: resultCarnet.map(x => Object.assign(x, resultPuntos.result.find(y => y.dni === x.DNI))) 
+                            })  
+                            var numMultas = [];
+                            let updateConductores = this.state.conductores;  
+                            updateConductores.forEach(function (conductor) {   
+                                MultasApi.getAllMultas(conductor.dni)
+                                .then(         
+                                    (multasResult) => {
+                                          conductor.multas = multasResult.length;
+                                             alert(conductor.dni +": "+conductor.multas)   
+                                            numMultas.push({dni: conductor.dni, multas: conductor.multas});
+                                             
+                                    }
+                                )
+                                alert(numMultas.dni)
+                              }); 
+                              
+                              this.setState({conductores: updateConductores});
+                    }
+                    )
+                          
+                },
+                (error) => {
+                    this.setState({
+                        errorInfo: "Problem with connection to server"
+                    })
+                }
+            )
+    }    */
+
+    /*componentDidMount(){
+        ConductoresApi.getAllConductores()
+            .then(         
+                (resultCarnet) => {
+                    PuntosApi.getAllPuntos()
+                    .then(
+                        (resultPuntos) => {
+                            this.setState({
+                                conductores: resultCarnet.map(x => Object.assign(x, resultPuntos.result.find(y => y.dni === x.DNI))) 
+                            })  
+                            let updateConductores = this.state.conductores;  
+                            updateConductores.forEach(function (conductor) {   
+                                MultasApi.getAllMultas(conductor.dni)
+                                .then(         
+                                    (multasResult) => {
+                                          conductor.multas = multasResult.length;
+                                            alert(conductor.dni +": "+conductor.multas)  
+                                    }
+                                )
+                              }); 
+
+                              this.setState({conductores: updateConductores});
+                    }
+                    )
+                          
+                },
+                (error) => {
+                    this.setState({
+                        errorInfo: "Problem with connection to server"
+                    })
+                }
+            )
+    } */
+
+    
 
 
     handleEdit(conductor){
