@@ -22,10 +22,10 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-    "resolutions": {
-      "react-router": "5.0.0",
-      "react-router-dom": "5.0.0"
-    },
+  "resolutions": {
+    "react-router": "5.0.0",
+    "react-router-dom": "5.0.0"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
