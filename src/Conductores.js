@@ -106,7 +106,7 @@ class Conductores extends React.Component{
                             this.setState({
                                 conductores: resultCarnet.map(x => Object.assign(x, resultPuntos.result.find(y => y.dni === x.DNI))) 
                             })  
-                            let updateConductores = this.state.conductores; 
+                            let updateConductores = this.state.conductores; /*eg*/
                             updateConductores.forEach(function (conductor) {   
                                 MultasApi.getAllMultas(conductor.dni)
                                 .then(         
@@ -130,7 +130,7 @@ class Conductores extends React.Component{
             )
     }  
 
-    
+
     handleEdit(conductor){
         this.setState(prevState => ({
             isEditing: {...prevState.isEditing, [conductor.dni]: conductor}
