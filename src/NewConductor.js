@@ -32,9 +32,10 @@ class NewConductor extends React.Component {
                 <td></td>
                 <td></td>
                 <td><Button variant="success" onClick={this.clickAdd}>Añadir conductor</Button></td>
-                <td><Button  >Ver carnet</Button></td>
+               
                 <td><Button href="http://fis-puntos-ui.herokuapp.com/" >Gestionar puntos</Button></td>
                 <td><Button href="https://multas-ui.herokuapp.com/" >Ver multas</Button></td>
+                <td><Button  >Ver carnet</Button></td>
             </tr>
             
         );

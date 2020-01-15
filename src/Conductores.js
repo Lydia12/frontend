@@ -5,6 +5,7 @@ import EditConductor from './EditConductor.js';
 import Alert from './Alert.js';
 import ConductoresApi from './ConductoresApi.js';
 import PuntosApi from './PuntosApi.js';
+import MultasApi from './MultasApi.js';
 
 
 class Conductores extends React.Component{
@@ -21,7 +22,59 @@ class Conductores extends React.Component{
         this.handleCloseError = this.handleCloseError.bind(this);
         this.addConductor = this.addConductor.bind(this);
     }
-    
+
+    /*componentDidMount(){
+        ConductoresApi.getAllConductores()
+            .then(         
+                (resultCarnet) => {
+                    this.setState({
+                        conductores: resultCarnet
+                    })    
+                },
+                (error) => {
+                    this.setState({
+                        errorInfo: "Problem with connection to server"
+                    })
+                }
+            )
+    }*/
+
+    /*
+    componentDidMount(){
+        ConductoresApi.getAllConductores()
+            .then(         
+                (resultCarnet) => {
+                    this.setState({
+                        conductores: resultCarnet
+                    })
+                    let resultMultas = [];
+                            let updateConductores = this.state.conductores; 
+                            updateConductores.forEach(function (conductor) {   
+                                MultasApi.getAllMultas(conductor.dni)
+                                .then(         
+                                    (multasResult) => {
+                                          conductor.multas = multasResult.length;
+                                            alert(conductor.dni +": "+conductor.multas)  
+                                            resultMultas.push(conductor.dni, conductor.multas);
+                                    }
+                                )
+                              }); 
+                              resultMultas.forEach(function (conductor) { 
+                                   alert(conductor.dni +": "+conductor.multas)   
+                               });
+                               alert(resultMultas)
+                              this.setState({conductores: updateConductores});
+                         
+                },
+                (error) => {
+                    this.setState({
+                        errorInfo: "Problem with connection to server"
+                    })
+                }
+            )
+    } */
+
+    /*  
     componentDidMount(){
         ConductoresApi.getAllConductores()
             .then(         
@@ -41,7 +94,41 @@ class Conductores extends React.Component{
                     })
                 }
             )
-    }
+    } */
+    
+    componentDidMount(){
+        ConductoresApi.getAllConductores()
+            .then(         
+                (resultCarnet) => {
+                    PuntosApi.getAllPuntos()
+                    .then(
+                        (resultPuntos) => {
+                            this.setState({
+                                conductores: resultCarnet.map(x => Object.assign(x, resultPuntos.result.find(y => y.dni === x.DNI))) 
+                            })  
+                            let updateConductores = this.state.conductores; 
+                            updateConductores.forEach(function (conductor) {   
+                                MultasApi.getAllMultas(conductor.dni)
+                                .then(         
+                                    (multasResult) => {
+                                          conductor.multas = multasResult.length;
+                                            /*alert(conductor.dni +": "+conductor.multas)  */
+                                    }
+                                )
+                              }); 
+
+                              this.setState({conductores: updateConductores});
+                    }
+                    )
+                          
+                },
+                (error) => {
+                    this.setState({
+                        errorInfo: "Problem with connection to server"
+                    })
+                }
+            )
+    }  
 
 
     handleEdit(conductor){

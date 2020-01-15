@@ -7,7 +7,7 @@ function Conductor(props){
         <td>{props.conductor.name}</td>
         <td>{props.conductor.surname}</td>
         <td>{props.conductor.puntos_actuales}</td>
-        <td>{props.conductor.importe}</td>
+        <td>{props.conductor.multas}</td>
         <td>
             <button className="btn btn-primary" onClick={() => props.onEdit(props.conductor)}>Recuperar puntos</button>
         </td>
