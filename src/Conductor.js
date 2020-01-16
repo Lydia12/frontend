@@ -1,6 +1,8 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button'
 
 function Conductor(props){
+    
     return(
     <tr>
         <td>{props.conductor.DNI}</td>
@@ -9,10 +11,13 @@ function Conductor(props){
         <td>{props.conductor.puntos_actuales}</td>
         <td>{props.conductor.multas}</td>
         <td>
-        <button type="button" class="btn btn-danger" onClick={() => props.onDelete(props.conductor.DNI)}>Recuperar puntos</button>
+            <Button    variant="danger" onClick={() => props.onDelete(props.conductor)}>Eliminar conductor</Button>
         </td>
         <td>
-            <button className="btn btn-primary">Historial de puntos</button>
+            <button className="btn btn-primary" onClick={() => props.onEdit(props.conductor)}>Recuperar puntos</button>
+        </td>
+        <td>
+            <button className="btn btn-primary" onClick={() => props.onHistorial(props.conductor)}>Historial de puntos</button>
         </td>
     </tr>
     );

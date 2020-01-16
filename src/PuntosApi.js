@@ -17,7 +17,22 @@ class PuntosApi{
         });
     }
 
-    
+    static delete(dni){
+        /*const headers = this.requestHeaders();  */
+       
+          const request = new Request(PuntosApi.API_BASE_URL + "/puntos/" + dni, {  
+           method: 'DELETE',
+           headers: {'x-api-key': 'eiWee8ep9due4deeshoa8Peichai8Eih',
+           'Content-Type' : 'application/json',} ,
+           body: JSON.stringify({
+            dni: dni,
+            }), 
+       });
+
+       return fetch(request).then(response => {
+           return "Eliminado correctamente";
+       });
+   }
 
 
     static  recuperarPuntos(dni, puntos){
@@ -32,7 +47,7 @@ class PuntosApi{
     }
 
     static  getHistorialPuntos(dni){
-        const request = new Request(PuntosApi.API_BASE_URL + "/historial/" + dni,   {  
+        const request = new Request(PuntosApi.API_BASE_URL + "puntos/historial/" + dni,   {  
         method: 'GET',
         headers: {'x-api-key': 'eiWee8ep9due4deeshoa8Peichai8Eih'}  
     });

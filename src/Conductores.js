@@ -61,189 +61,6 @@ class Conductores extends React.Component{
             )
     }      
 
-   
-
-     
-    /*componentDidMount(){
-        ConductoresApi.getAllConductores()
-            .then(         
-                (resultCarnet) => {
-                    this.setState({
-                        conductores: resultCarnet
-                    })
-                    let resultMultas = [];
-                            let updateConductores = this.state.conductores; 
-                            updateConductores.forEach(function (conductor) {   
-                                MultasApi.getAllMultas(conductor.dni)
-                                .then(         
-                                    (multasResult) => {
-                                          conductor.multas = multasResult.length;
-                                            alert(conductor.dni +": "+conductor.multas)  
-                                            resultMultas.push(conductor.dni, conductor.multas);
-                                    }
-                                )
-                              }); 
-                              resultMultas.forEach(function (conductor) { 
-                                   alert(conductor.dni +": "+conductor.multas)   
-                               });
-                               alert(resultMultas)
-                              this.setState({conductores: updateConductores});
-                         
-                },
-                (error) => {
-                    this.setState({
-                        errorInfo: "Problem with connection to server"
-                    })
-                }
-            )
-    }  */
-
-        /*  componentDidMount(){
-        ConductoresApi.getAllConductores()
-            .then(         
-                (resultCarnet) => {
-                    PuntosApi.getAllPuntos()
-                    .then(
-                        (resultPuntos) => {
-                            this.setState({
-                                conductores: resultCarnet.map(x => Object.assign(x, resultPuntos.result.find(y => y.dni === x.DNI)))
-                            })     
-                    }
-                    )      
-                },
-                (error) => {
-                    this.setState({
-                        errorInfo: "Problem with connection to server"
-                    })
-                }
-            )
-    }       */ 
-    
-      /***********FUNKTIONIERT**********************************/ 
-      
-      /* componentDidMount(){
-        ConductoresApi.getAllConductores()
-            .then(         
-                (resultCarnet) => {
-                    PuntosApi.getAllPuntos()
-                    .then(
-                        (resultPuntos) => {
-                            this.setState({
-                                conductores: resultCarnet.map(x => Object.assign(x, resultPuntos.result.find(y => y.dni === x.DNI))) 
-                            })  
-                            let updateConductores = this.state.conductores; 
-                            
-                           /* let promises = map(updateConductores => uploadToAWS(updateConductores, {})); */
-                            /*updateConductores.forEach(function (conductor) {   
-                                MultasApi.getAllMultas(conductor.dni)
-                                .then(         
-                                    (multasResult) => {
-                                          conductor.multas = multasResult.length;
-                                             alert(conductor.dni +": "+conductor.multas)  
-                                    }
-                                )
-                              }); */
-                             /* Promise.all(promises)
-                                .then((updateConductores) => {
-                                    this.setState({conductores: updateConductores});
-                                }).catch((error) => {
-                                    // there was an error
-                                });
-                                /*try {
-                                    let updateConductores = await Promise.all(promises);
-                                    // everything succeeded
-                                  } catch (error) {
-                                    // there was an error
-                                  }*/
-                                //this.state.conductores = updateConductores; 
-                           /*   this.setState({conductores: updateConductores});
-                    }
-                    )
-                          
-                },
-                (error) => {
-                    this.setState({
-                        errorInfo: "Problem with connection to server"
-                    })
-                }
-            )
-    }    */  
-
-  /*  componentDidMount(){
-        ConductoresApi.getAllConductores()
-            .then(         
-                (resultCarnet) => {
-                    PuntosApi.getAllPuntos()
-                    .then(
-                        (resultPuntos) => {
-                            this.setState({
-                                conductores: resultCarnet.map(x => Object.assign(x, resultPuntos.result.find(y => y.dni === x.DNI))) 
-                            })  
-                            var numMultas = [];
-                            let updateConductores = this.state.conductores;  
-                            updateConductores.forEach(function (conductor) {   
-                                MultasApi.getAllMultas(conductor.dni)
-                                .then(         
-                                    (multasResult) => {
-                                          conductor.multas = multasResult.length;
-                                             alert(conductor.dni +": "+conductor.multas)   
-                                            numMultas.push({dni: conductor.dni, multas: conductor.multas});
-                                             
-                                    }
-                                )
-                                alert(numMultas.dni)
-                              }); 
-                              
-                              this.setState({conductores: updateConductores});
-                    }
-                    )
-                          
-                },
-                (error) => {
-                    this.setState({
-                        errorInfo: "Problem with connection to server"
-                    })
-                }
-            )
-    }    */
-
-    /*componentDidMount(){
-        ConductoresApi.getAllConductores()
-            .then(         
-                (resultCarnet) => {
-                    PuntosApi.getAllPuntos()
-                    .then(
-                        (resultPuntos) => {
-                            this.setState({
-                                conductores: resultCarnet.map(x => Object.assign(x, resultPuntos.result.find(y => y.dni === x.DNI))) 
-                            })  
-                            let updateConductores = this.state.conductores;  
-                            updateConductores.forEach(function (conductor) {   
-                                MultasApi.getAllMultas(conductor.dni)
-                                .then(         
-                                    (multasResult) => {
-                                          conductor.multas = multasResult.length;
-                                            alert(conductor.dni +": "+conductor.multas)  
-                                    }
-                                )
-                              }); 
-
-                              this.setState({conductores: updateConductores});
-                    }
-                    )
-                          
-                },
-                (error) => {
-                    this.setState({
-                        errorInfo: "Problem with connection to server"
-                    })
-                }
-            )
-    } */
-
-    
-
-
     handleEdit(conductor){
         this.setState(prevState => ({
             isEditing: {...prevState.isEditing, [conductor.dni]: conductor}
@@ -267,10 +84,53 @@ class Conductores extends React.Component{
         })
     }
 
-    handleDelete(conductor){
-        this.setState(prevState => ({
-            
-        }))
+    comprobarDNI(dni) {
+        var numero
+        var letr
+        var letra
+        var expresion_regular_dni
+
+        expresion_regular_dni = /^\d{8}[a-zA-Z]$/;
+
+        if(expresion_regular_dni.test (dni) === true){
+           numero = dni.substr(0,dni.length-1);
+           letr = dni.substr(dni.length-1,1);
+           numero = numero % 23;
+           letra='TRWAGMYFPDXBNJZSQVHLCKET';
+           letra=letra.substring(numero,numero+1);
+          if (letra!==letr.toUpperCase()) {
+            return true;
+           }
+        }else{
+
+           return false;
+         }   
+}
+
+    handleDelete(conductor, dni){
+        ConductoresApi.delete(conductor, dni).then(
+            this.setState(prevState => {
+                this.setState(prevState => ({
+                    conductores: prevState.conductores.filter((c) => c.dni !== conductor.DNI)
+                }))
+            }
+            )
+        )
+        MultasApi.delete(conductor, dni).then(
+            this.setState(prevState => {
+                this.setState(prevState => ({
+                    conductores: prevState.conductores.filter((c) => c.dni !== conductor.DNI)
+                }))
+            }
+            )
+        )
+         PuntosApi.delete(conductor.dni).then(
+            this.setState(prevState => {
+                this.setState(prevState => ({
+                    conductores: prevState.conductores.filter((c) => c.dni !== conductor.DNI)
+                }))
+            }
+         ))
     }
 
     handleChange(dni, conductor){
@@ -307,13 +167,13 @@ class Conductores extends React.Component{
        
         expresion_regular_dni = /^\d{8}[a-zA-Z]$/;
        
-        if(expresion_regular_dni.test (dni) == true){
+        if(expresion_regular_dni.test (dni) === true){
            numero = dni.substr(0,dni.length-1);
            letr = dni.substr(dni.length-1,1);
            numero = numero % 23;
            letra='TRWAGMYFPDXBNJZSQVHLCKET';
            letra=letra.substring(numero,numero+1);
-          if (letra!=letr.toUpperCase()) {
+          if (letra!==letr.toUpperCase()) {
             return true;
            }
         }else{
@@ -333,8 +193,6 @@ class Conductores extends React.Component{
             multas: 0
         }
 
-
-
         if(dni !=="" && nombre !=="" && apellido!==""){
 
 
@@ -348,33 +206,29 @@ class Conductores extends React.Component{
                 let regex = new RegExp("^[ñíóáéú a-zA-Z ]+$");
 
                 if (!regex.test(nombre) || !regex.test(apellido)) {
-               
                     this.setState({
                         errorInfo:"El nombre y el apellido solo deben contener letras"
                     })
                     return;
                 }
-
-                ConductoresApi.addConductor(dni, nombre, apellido).then(
-                    this.setState(prevState => {
-                        const conductores = prevState.conductores;
-                        console.log(conductor);
-                        console.log(cenglish);
-                        console.log(conductores);
-                        if (!conductores.find(c => c.DNI === cenglish.DNI)){
-                            return({
-                                conductores: [...prevState.conductores, cenglish] 
-                            });
-                        }
-                        return({
-                            errorInfo: ' Conductor ya existe'
-                        });
-                    })
-                )
-
-                PuntosApi.addPuntos(dni);            
-            
-         }
+        ConductoresApi.addConductor(dni, nombre, apellido).then(
+            this.setState(prevState => {
+                const conductores = prevState.conductores;
+                console.log(conductor);
+                console.log(cenglish);
+                console.log(conductores);
+                if (!conductores.find(c => c.DNI === cenglish.DNI)){
+                    return({
+                        conductores: [...prevState.conductores, cenglish] 
+                    });
+                }
+                return({
+                    errorInfo: 'Conductor ya existe'
+                });
+                })
+                 
+            )
+        PuntosApi.addPuntos(dni);
         
         }else{
 
@@ -384,6 +238,7 @@ class Conductores extends React.Component{
         }
 
     }
+}
 
     render(){
         return(
