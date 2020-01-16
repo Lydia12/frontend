@@ -181,63 +181,66 @@ class Conductores extends React.Component{
            return false;
          }   
 }
+addConductor(conductor, dni, nombre, apellido) {
 
-    
-    addConductor(conductor, dni, nombre, apellido) {
-
-        let cenglish = {
-            name: conductor.nombre,
-            surname: conductor.apellido,
-            DNI: conductor.dni,
-            puntos_actuales: 8,
-            multas: 0
-        }
-
-        if(dni !=="" && nombre !=="" && apellido!==""){
+    let cenglish = {
+        name: conductor.nombre,
+        surname: conductor.apellido,
+        DNI: conductor.dni,
+        puntos_actuales: 8,
+        multas: 0
+    }
 
 
-            if(!this.comprobarDNI(dni)){
 
-                this.setState({
-                    errorInfo:"Formato de DNI no válido"
-                })
+    if(dni !=="" && nombre !=="" && apellido!==""){
 
-            }else if(this.comprobarDNI(dni)){
-                let regex = new RegExp("^[ñíóáéú a-zA-Z ]+$");
 
-                if (!regex.test(nombre) || !regex.test(apellido)) {
-                    this.setState({
-                        errorInfo:"El nombre y el apellido solo deben contener letras"
-                    })
-                    return;
-                }
-        ConductoresApi.addConductor(dni, nombre, apellido).then(
-            this.setState(prevState => {
-                const conductores = prevState.conductores;
-                console.log(conductor);
-                console.log(cenglish);
-                console.log(conductores);
-                if (!conductores.find(c => c.DNI === cenglish.DNI)){
-                    return({
-                        conductores: [...prevState.conductores, cenglish] 
-                    });
-                }
-                return({
-                    errorInfo: 'Conductor ya existe'
-                });
-                })
-                 
-            )
-        PuntosApi.addPuntos(dni);
-        
-        }else{
+        if(!this.comprobarDNI(dni)){
 
             this.setState({
-                errorInfo:"Los campos no pueden estar vacíos"
+                errorInfo:"Formato de DNI no válido"
             })
-        }
 
+        }else if(this.comprobarDNI(dni)){
+            let regex = new RegExp("^[ñíóáéú a-zA-Z ]+$");
+
+            if (!regex.test(nombre) || !regex.test(apellido)) {
+           
+                this.setState({
+                    errorInfo:"El nombre y el apellido solo deben contener letras"
+                })
+                return;
+            }
+
+            ConductoresApi.addConductor(dni, nombre, apellido).then(
+                this.setState(prevState => {
+                    const conductores = prevState.conductores;
+                    console.log(conductor);
+                    console.log(cenglish);
+                    console.log(conductores);
+                    if (!conductores.find(c => c.DNI === cenglish.DNI)){
+                        return({
+                            conductores: [...prevState.conductores, cenglish] 
+                        });
+                    }
+                    return({
+                        errorInfo: ' Conductor ya existe'
+                    });
+                })
+            )
+
+            PuntosApi.addPuntos(dni);            
+        
+     }
+    
+    }else{
+
+        this.setState({
+            errorInfo:"Los campos no pueden estar vacíos"
+        })
     }
+
 }
 
     render(){
