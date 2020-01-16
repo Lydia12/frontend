@@ -23,7 +23,7 @@ class Conductores extends React.Component{
         this.addConductor = this.addConductor.bind(this);
     }
 
-      /* componentDidMount(){
+        /*componentDidMount(){
         ConductoresApi.getAllConductores()
             .then(         
                 (resultCarnet) => {
@@ -110,11 +110,11 @@ class Conductores extends React.Component{
                     })
                 }
             )
-    }    */
+    }     */
     
       /***********FUNKTIONIERT**********************************/ 
       
-      componentDidMount(){
+       componentDidMount(){
         ConductoresApi.getAllConductores()
             .then(         
                 (resultCarnet) => {
@@ -134,7 +134,7 @@ class Conductores extends React.Component{
                                     }
                                 )
                               }); 
-
+                                //this.state.conductores = updateConductores; 
                               this.setState({conductores: updateConductores});
                     }
                     )
@@ -146,7 +146,7 @@ class Conductores extends React.Component{
                     })
                 }
             )
-    }     
+    }      
 
   /*  componentDidMount(){
         ConductoresApi.getAllConductores()
