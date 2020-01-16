@@ -305,7 +305,7 @@ class Conductores extends React.Component{
             name: conductor.nombre,
             surname: conductor.apellido,
             DNI: conductor.dni,
-            puntos: 8,
+            puntos_actuales: 8,
             multas: 0
         }
         ConductoresApi.addConductor(dni, nombre, apellido).then(
