@@ -9,7 +9,7 @@ function Conductor(props){
         <td>{props.conductor.puntos_actuales}</td>
         <td>{props.conductor.multas}</td>
         <td>
-            <button className="btn btn-primary" onClick={() => props.onEdit(props.conductor)}>Recuperar puntos</button>
+        <button type="button" class="btn btn-danger" onClick={() => props.onDelete(props.conductor.DNI)}>Recuperar puntos</button>
         </td>
         <td>
             <button className="btn btn-primary">Historial de puntos</button>

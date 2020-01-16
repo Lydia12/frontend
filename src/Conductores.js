@@ -269,7 +269,7 @@ class Conductores extends React.Component{
 
     handleDelete(conductor){
         this.setState(prevState => ({
-            conductores: prevState.conductores.filter((c) => c.dni !== conductor.dni)
+            
         }))
     }
 
@@ -299,8 +299,32 @@ class Conductores extends React.Component{
         });
     }
 
+    comprobarDNI(dni) {
+        var numero
+        var letr
+        var letra
+        var expresion_regular_dni
+       
+        expresion_regular_dni = /^\d{8}[a-zA-Z]$/;
+       
+        if(expresion_regular_dni.test (dni) == true){
+           numero = dni.substr(0,dni.length-1);
+           letr = dni.substr(dni.length-1,1);
+           numero = numero % 23;
+           letra='TRWAGMYFPDXBNJZSQVHLCKET';
+           letra=letra.substring(numero,numero+1);
+          if (letra!=letr.toUpperCase()) {
+            return true;
+           }
+        }else{
+            
+           return false;
+         }   
+}
+
     
     addConductor(conductor, dni, nombre, apellido) {
+
         let cenglish = {
             name: conductor.nombre,
             surname: conductor.apellido,
@@ -308,26 +332,57 @@ class Conductores extends React.Component{
             puntos_actuales: 8,
             multas: 0
         }
-        ConductoresApi.addConductor(dni, nombre, apellido).then(
-            this.setState(prevState => {
-                const conductores = prevState.conductores;
-                console.log(conductor);
-                console.log(cenglish);
-                console.log(conductores);
-                if (!conductores.find(c => c.DNI === cenglish.DNI)){
-                    return({
-                        conductores: [...prevState.conductores, cenglish] 
-                    });
-                }
-                return({
-                    errorInfo: ' Conductor ya existe'
-                });
-            })
-        )
 
-        PuntosApi.addPuntos(dni);
+
+
+        if(dni !=="" && nombre !=="" && apellido!==""){
+
+
+            if(!this.comprobarDNI(dni)){
+
+                this.setState({
+                    errorInfo:"Formato de DNI no válido"
+                })
+
+            }else if(this.comprobarDNI(dni)){
+                let regex = new RegExp("^[ñíóáéú a-zA-Z ]+$");
+
+                if (!regex.test(nombre) || !regex.test(apellido)) {
+               
+                    this.setState({
+                        errorInfo:"El nombre y el apellido solo deben contener letras"
+                    })
+                    return;
+                }
+
+                ConductoresApi.addConductor(dni, nombre, apellido).then(
+                    this.setState(prevState => {
+                        const conductores = prevState.conductores;
+                        console.log(conductor);
+                        console.log(cenglish);
+                        console.log(conductores);
+                        if (!conductores.find(c => c.DNI === cenglish.DNI)){
+                            return({
+                                conductores: [...prevState.conductores, cenglish] 
+                            });
+                        }
+                        return({
+                            errorInfo: ' Conductor ya existe'
+                        });
+                    })
+                )
+
+                PuntosApi.addPuntos(dni);            
+            
+         }
         
-        
+        }else{
+
+            this.setState({
+                errorInfo:"Los campos no pueden estar vacíos"
+            })
+        }
+
     }
 
     render(){
