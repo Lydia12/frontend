@@ -23,29 +23,35 @@ class Conductores extends React.Component{
         this.addConductor = this.addConductor.bind(this);
     }
 
-        /*componentDidMount(){
+    componentDidMount(){
         ConductoresApi.getAllConductores()
             .then(         
                 (resultCarnet) => {
-                    this.setState({
-                        conductores: resultCarnet
-                    })    
-                },
-                (error) => {
-                    this.setState({
-                        errorInfo: "Problem with connection to server"
-                    })
-                }
-            )
-    }  */
+                    PuntosApi.getAllPuntos()
+                    .then(
+                        (resultPuntos) => {
+                            this.setState({
+                                conductores: resultCarnet.map(x => Object.assign(x, resultPuntos.result.find(y => y.dni === x.DNI)))
+                            }) 
+                            let updateConductores = this.state.conductores;
 
-       /*  componentDidMount(){
-        MultasApi.getAllMultas("20154021M")
-            .then(         
-                (resultMultas) => {
-                     
-                    alert(resultMultas.length);
-                        
+                            let promises = updateConductores.map(function (conductor) {
+                                return MultasApi.getAllMultas(conductor.DNI)
+                                        .then(         
+                                            (multasResult) => {
+                                                conductor.multas = multasResult.length;
+                                                //alert(conductor.dni +": "+conductor.multas)  
+                                            }
+                                        )
+                            });
+        
+                            Promise.all(promises).then((result => {
+                                this.setState({conductores: updateConductores});
+                            }));     
+                    }
+                    )      
+                   
+
                 },
                 (error) => {
                     this.setState({
@@ -53,7 +59,9 @@ class Conductores extends React.Component{
                     })
                 }
             )
-    }  */
+    }      
+
+   
 
      
     /*componentDidMount(){
@@ -90,8 +98,7 @@ class Conductores extends React.Component{
             )
     }  */
 
-       
-      /* componentDidMount(){
+        /*  componentDidMount(){
         ConductoresApi.getAllConductores()
             .then(         
                 (resultCarnet) => {
@@ -110,11 +117,11 @@ class Conductores extends React.Component{
                     })
                 }
             )
-    }     */
+    }       */ 
     
       /***********FUNKTIONIERT**********************************/ 
       
-       componentDidMount(){
+      /* componentDidMount(){
         ConductoresApi.getAllConductores()
             .then(         
                 (resultCarnet) => {
@@ -124,18 +131,32 @@ class Conductores extends React.Component{
                             this.setState({
                                 conductores: resultCarnet.map(x => Object.assign(x, resultPuntos.result.find(y => y.dni === x.DNI))) 
                             })  
-                            let updateConductores = this.state.conductores;  
-                            updateConductores.forEach(function (conductor) {   
+                            let updateConductores = this.state.conductores; 
+                            
+                           /* let promises = map(updateConductores => uploadToAWS(updateConductores, {})); */
+                            /*updateConductores.forEach(function (conductor) {   
                                 MultasApi.getAllMultas(conductor.dni)
                                 .then(         
                                     (multasResult) => {
                                           conductor.multas = multasResult.length;
-                                            alert(conductor.dni +": "+conductor.multas)  
+                                             alert(conductor.dni +": "+conductor.multas)  
                                     }
                                 )
-                              }); 
+                              }); */
+                             /* Promise.all(promises)
+                                .then((updateConductores) => {
+                                    this.setState({conductores: updateConductores});
+                                }).catch((error) => {
+                                    // there was an error
+                                });
+                                /*try {
+                                    let updateConductores = await Promise.all(promises);
+                                    // everything succeeded
+                                  } catch (error) {
+                                    // there was an error
+                                  }*/
                                 //this.state.conductores = updateConductores; 
-                              this.setState({conductores: updateConductores});
+                           /*   this.setState({conductores: updateConductores});
                     }
                     )
                           
@@ -146,7 +167,7 @@ class Conductores extends React.Component{
                     })
                 }
             )
-    }      
+    }    */  
 
   /*  componentDidMount(){
         ConductoresApi.getAllConductores()
@@ -278,18 +299,35 @@ class Conductores extends React.Component{
         });
     }
 
-    addConductor(conductor) {
-        this.setState(prevState => {
-            const conductores = prevState.conductores;
-            if (!conductores.find(c => c.dni === conductor.dni)){
+    
+    addConductor(conductor, dni, nombre, apellido) {
+        let cenglish = {
+            name: conductor.nombre,
+            surname: conductor.apellido,
+            DNI: conductor.dni,
+            puntos: 8,
+            multas: 0
+        }
+        ConductoresApi.addConductor(dni, nombre, apellido).then(
+            this.setState(prevState => {
+                const conductores = prevState.conductores;
+                console.log(conductor);
+                console.log(cenglish);
+                console.log(conductores);
+                if (!conductores.find(c => c.DNI === cenglish.DNI)){
+                    return({
+                        conductores: [...prevState.conductores, cenglish] 
+                    });
+                }
                 return({
-                    conductores: [...prevState.conductores, conductor] 
+                    errorInfo: ' Conductor ya existe'
                 });
-            }
-            return({
-                errorInfo: ' Conductor ya existe'
-            });
-        });
+            })
+        )
+
+        PuntosApi.addPuntos(dni);
+        
+        
     }
 
     render(){

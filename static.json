@@ -4,8 +4,14 @@
         "/**": "index.html"
     },
     "proxies": {
-        "/api/":{
-            "origin": "${API_URL}/api"
+        "/api/v1/multas":{
+            "origin": "${MULTAS_URL}/api/v1/multas"
+        },
+        "/api/v1/puntos":{
+            "origin": "${PUNTOS_URL}/api/v1/puntos"
+        },
+        "/api/v1/carnets":{
+            "origin": "${CARNET_URL}/api/v1/carnets"
         }
     }
 }

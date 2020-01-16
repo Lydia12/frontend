@@ -41,5 +41,16 @@ class PuntosApi{
         return response.json();
     });
 }
+static  addPuntos(dni){
+    const request = new Request(PuntosApi.API_BASE_URL + "/puntos" ,   {  
+    method: 'POST',
+    body: JSON.stringify({dni:dni,  puntos_actuales : '', puntos_perdidos: '', puntos_recuperados: ''}),
+    headers: {'x-api-key': 'eiWee8ep9due4deeshoa8Peichai8Eih'}  
+});
+
+return fetch(request).then(response => {
+    return response.json();
+});
+}
 }
 export default PuntosApi;
